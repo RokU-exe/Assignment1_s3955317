@@ -1,3 +1,7 @@
+/**
+ * @author <Le Xuan Loc - s3955317>
+ */
+
 package org.system.insurance.model;
 
 /**
@@ -54,7 +58,7 @@ public abstract class Customer {
      */
     @Override
     public String toString() {
-        return "Customer{" +
+        return "Dependent{" +
                 "id='" + id + '\'' +
                 ", fullName='" + fullName + '\'' +
                 ", insuranceCard=" + insuranceCard +
