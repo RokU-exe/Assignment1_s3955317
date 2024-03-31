@@ -4,8 +4,6 @@
 
 package org.system.insurance.util;
 
-import org.system.insurance.model.*;
-
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,6 +19,9 @@ import org.system.insurance.model.PolicyHolder;
 
 public class FileUtil {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    // Inside FileUtil.java
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
 
     public static List<Customer> readCustomers(String filePath) throws IOException {
         List<Customer> customers = new ArrayList<>();
@@ -92,6 +93,24 @@ public class FileUtil {
                 bw.newLine();
             }
         }
+    }
+    public static void writeClaims(List<Claim> claims, String filePath) throws IOException {
+        List<String> lines = new ArrayList<>();
+        for (Claim claim : claims) {
+            // Convert each claim to a string representation. Adjust according to your Claim class structure.
+            String line = String.join(",",
+                    claim.getId(),
+                    dateFormat.format(claim.getClaimDate()), // Use dateFormat
+                    claim.getInsuredPersonId(),
+                    claim.getCardNumber(),
+                    dateFormat.format(claim.getExamDate()), // Use dateFormat
+                    String.join(";", claim.getDocuments()),
+                    String.valueOf(claim.getClaimAmount()),
+                    claim.getStatus(),
+                    claim.getReceiverBankingInfo());
+            lines.add(line);
+        }
+        writeLines(lines, filePath);
     }
 }
 

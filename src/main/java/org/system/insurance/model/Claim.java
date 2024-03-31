@@ -10,6 +10,7 @@ public class Claim {
     private String id; // Claim ID with format f-numbers (10 digits)
     private Date claimDate; // The date the claim was made
     private Customer insuredPerson; // The person insured
+    private String insuredPersonId;
     private String cardNumber; // Associated insurance card number
     private Date examDate; // The date of the medical examination
     private List<String> documents; // List of document names
@@ -22,6 +23,7 @@ public class Claim {
         this.id = id;
         this.claimDate = claimDate;
         this.insuredPerson = insuredPerson;
+        this.insuredPersonId = insuredPersonId;
         this.cardNumber = cardNumber;
         this.examDate = examDate;
         this.documents = documents;
@@ -103,20 +105,17 @@ public class Claim {
         this.receiverBankingInfo = receiverBankingInfo;
     }
 
-    // Method to return a string representation of the claim
+    public String getInsuredPersonId() {
+        return insuredPersonId;
+    }
+
+    public void setInsuredPersonId(String insuredPersonId) {
+        this.insuredPersonId = insuredPersonId;
+    }
+
     @Override
     public String toString() {
-        return "Claim{" +
-                "id='" + id + '\'' +
-                ", claimDate=" + claimDate +
-                ", insuredPerson=" + insuredPerson +
-                ", cardNumber='" + cardNumber + '\'' +
-                ", examDate=" + examDate +
-                ", documents=" + documents +
-                ", claimAmount=" + claimAmount +
-                ", status='" + status + '\'' +
-                ", receiverBankingInfo='" + receiverBankingInfo + '\'' +
-                '}';
+        return STR."Claim{id='\{id}\{'\''}, claimDate=\{claimDate}, insuredPerson=\{insuredPerson}, cardNumber='\{cardNumber}\{'\''}, examDate=\{examDate}, documents=\{documents}, claimAmount=\{claimAmount}, status='\{status}\{'\''}, receiverBankingInfo='\{receiverBankingInfo}\{'\''}\{'}'}";
     }
 }
 

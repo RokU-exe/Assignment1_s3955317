@@ -24,12 +24,24 @@ public class ClaimProcessManagerImpl implements ClaimProcessManager {
 
     @Override
     public void updateClaim(String claimId, Claim updatedClaim) {
-        claims = claims.stream().map(claim -> claim.getId().equals(claimId) ? updatedClaim : claim).collect(Collectors.toList());
+        for (int i = 0; i < claims.size(); i++) {
+            if (claims.get(i).getId().equals(claimId)) {
+                claims.set(i, updatedClaim);
+                return;
+            }
+        }
+        System.out.println("Claim with ID " + claimId + " not found.");
     }
 
     @Override
     public boolean deleteClaim(String claimId) {
-        return claims.removeIf(claim -> claim.getId().equals(claimId));
+        for (int i = 0; i < claims.size(); i++) {
+            if (claims.get(i).getId().equals(claimId)) {
+                claims.remove(i);
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
