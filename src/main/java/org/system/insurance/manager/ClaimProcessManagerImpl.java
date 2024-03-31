@@ -4,11 +4,9 @@
 
 package org.system.insurance.manager;
 
-import java.util.stream.Collectors;
 import org.system.insurance.model.Claim;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Implementation of the ClaimProcessManager interface.
@@ -30,7 +28,7 @@ public class ClaimProcessManagerImpl implements ClaimProcessManager {
                 return;
             }
         }
-        System.out.println("Claim with ID " + claimId + " not found.");
+        System.out.println(STR."Claim with ID \{claimId} not found.");
     }
 
     @Override

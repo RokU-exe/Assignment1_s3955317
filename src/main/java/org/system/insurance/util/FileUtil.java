@@ -44,7 +44,6 @@ public class FileUtil {
         List<String> lines = readLines(filePath);
         for (String line : lines) {
             String[] parts = line.split(",");
-            // Assuming InsuranceCard constructor: InsuranceCard(String cardNumber, String cardHolderId, Date expirationDate)
             Date expirationDate = dateFormat.parse(parts[3]);
             InsuranceCard card = new InsuranceCard(parts[0], parts[1], expirationDate);
             insuranceCards.add(card);
@@ -56,9 +55,9 @@ public class FileUtil {
         List<String> lines = readLines(filePath);
         for (String line : lines) {
             String[] parts = line.split(",");
-            if (parts.length < 9) { // Expecting at least 9 parts based on your Claim constructor
-                System.out.println("Skipping malformed line: " + line);
-                continue; // Skip this iteration if not enough parts
+            if (parts.length < 9) {
+                System.out.println(STR."Skipping malformed line: \{line}");
+                continue;
             }
             Date claimDate = dateFormat.parse(parts[1]);
             Date examDate = dateFormat.parse(parts[4]);
@@ -66,15 +65,12 @@ public class FileUtil {
             double claimAmount = Double.parseDouble(parts[6]);
             String status = parts[7];
             String receiverBankingInfo = parts[8];
-
-            // Assuming your Claim constructor and parts order are correct
             Claim claim = new Claim(parts[0], claimDate, parts[2], parts[3], examDate, documents, claimAmount, status, receiverBankingInfo);
             claims.add(claim);
         }
         return claims;
     }
 
-    // General methods to read and write lines from/to a text file
     private static List<String> readLines(String filePath) throws IOException {
         List<String> lines = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -97,13 +93,12 @@ public class FileUtil {
     public static void writeClaims(List<Claim> claims, String filePath) throws IOException {
         List<String> lines = new ArrayList<>();
         for (Claim claim : claims) {
-            // Convert each claim to a string representation. Adjust according to your Claim class structure.
             String line = String.join(",",
                     claim.getId(),
-                    dateFormat.format(claim.getClaimDate()), // Use dateFormat
+                    dateFormat.format(claim.getClaimDate()),
                     claim.getInsuredPersonId(),
                     claim.getCardNumber(),
-                    dateFormat.format(claim.getExamDate()), // Use dateFormat
+                    dateFormat.format(claim.getExamDate()),
                     String.join(";", claim.getDocuments()),
                     String.valueOf(claim.getClaimAmount()),
                     claim.getStatus(),

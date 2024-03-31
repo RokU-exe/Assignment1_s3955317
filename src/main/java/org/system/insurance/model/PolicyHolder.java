@@ -52,7 +52,6 @@ public class PolicyHolder extends Customer {
         return dependents;
     }
 
-    // Method to return a string representation of the policyholder
     @Override
     public String toString() {
         return "PolicyHolder{" +

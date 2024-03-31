@@ -9,10 +9,10 @@ import java.util.Date;
  * Represents an insurance card in the insurance system.
  */
 public class InsuranceCard {
-    private String cardNumber; // The card number (10 digits)
-    private Customer cardHolder; // The cardholder (a Customer - could be PolicyHolder or Dependent)
-    private Customer policyOwner; // The policy owner (a PolicyHolder)
-    private Date expirationDate; // Expiration date of the card
+    private String cardNumber;
+    private Customer cardHolder;
+    private Customer policyOwner;
+    private Date expirationDate;
 
     /**
      * Constructor for creating an instance of InsuranceCard.
@@ -71,12 +71,7 @@ public class InsuranceCard {
     // Method to return a string representation of the insurance card
     @Override
     public String toString() {
-        return "InsuranceCard{" +
-                "cardNumber='" + cardNumber + '\'' +
-                ", cardHolder=" + cardHolder.getFullName() + // Assuming Customer has a getFullName method
-                ", policyOwner=" + policyOwner.getFullName() +
-                ", expirationDate=" + expirationDate +
-                '}';
+        return STR."InsuranceCard{cardNumber='\{cardNumber}\{'\''}, cardHolder=\{cardHolder.getFullName()}, policyOwner=\{policyOwner.getFullName()}, expirationDate=\{expirationDate}\{'}'}";
     }
 }
 

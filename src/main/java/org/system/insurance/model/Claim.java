@@ -7,22 +7,21 @@ import java.util.List;
  * Represents an insurance claim.
  */
 public class Claim {
-    private String id; // Claim ID with format f-numbers (10 digits)
-    private Date claimDate; // The date the claim was made
-    private Customer insuredPerson; // The person insured
+    private String id;
+    private Date claimDate;
+    private Customer insuredPerson;
     private String insuredPersonId;
-    private String cardNumber; // Associated insurance card number
-    private Date examDate; // The date of the medical examination
-    private List<String> documents; // List of document names
-    private double claimAmount; // The amount claimed
-    private String status; // The status of the claim (New, Processing, Done)
-    private String receiverBankingInfo; // Receiver's banking information (Bank – Name – Number)
+    private String cardNumber;
+    private Date examDate;
+    private List<String> documents;
+    private double claimAmount;
+    private String status;
+    private String receiverBankingInfo;
 
     // Constructor
     public Claim(String id, Date claimDate, String insuredPersonId, String cardNumber, Date examDate, List<String> documents, double claimAmount, String status, String receiverBankingInfo){
         this.id = id;
         this.claimDate = claimDate;
-        this.insuredPerson = insuredPerson;
         this.insuredPersonId = insuredPersonId;
         this.cardNumber = cardNumber;
         this.examDate = examDate;

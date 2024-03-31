@@ -9,9 +9,9 @@ package org.system.insurance.model;
  * This class will be extended by specific types of customers such as PolicyHolder and Dependent.
  */
 public abstract class Customer {
-    protected String id; // Customer ID with format c-numbers (7 digits)
-    protected String fullName; // Full name of the customer
-    protected InsuranceCard insuranceCard; // Insurance card associated with the customer
+    protected String id;
+    protected String fullName;
+    protected InsuranceCard insuranceCard;
 
     /**
      * Constructor to initialize a Customer object.
@@ -58,11 +58,7 @@ public abstract class Customer {
      */
     @Override
     public String toString() {
-        return "Dependent{" +
-                "id='" + id + '\'' +
-                ", fullName='" + fullName + '\'' +
-                ", insuranceCard=" + insuranceCard +
-                '}';
+        return STR."Dependent{id='\{id}\{'\''}, fullName='\{fullName}\{'\''}, insuranceCard=\{insuranceCard}\{'}'}";
     }
 }
 
