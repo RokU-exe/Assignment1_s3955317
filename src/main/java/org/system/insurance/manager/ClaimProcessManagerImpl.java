@@ -4,6 +4,7 @@
 
 package org.system.insurance.manager;
 
+import java.util.stream.Collectors;
 import org.system.insurance.model.Claim;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +13,9 @@ import java.util.Optional;
 /**
  * Implementation of the ClaimProcessManager interface.
  */
-public class ClaimProcessManagerImpl implements ClaimProcessManager {
-    private List<Claim> claims; // The list to store claims
 
-    public ClaimProcessManagerImpl() {
-        this.claims = new ArrayList<>();
-    }
+public class ClaimProcessManagerImpl implements ClaimProcessManager {
+    private List<Claim> claims = new ArrayList<>();
 
     @Override
     public void addClaim(Claim claim) {
@@ -26,11 +24,7 @@ public class ClaimProcessManagerImpl implements ClaimProcessManager {
 
     @Override
     public void updateClaim(String claimId, Claim updatedClaim) {
-        Claim claim = getOne(claimId);
-        if (claim != null) {
-            int index = claims.indexOf(claim);
-            claims.set(index, updatedClaim);
-        }
+        claims = claims.stream().map(claim -> claim.getId().equals(claimId) ? updatedClaim : claim).collect(Collectors.toList());
     }
 
     @Override
@@ -40,10 +34,7 @@ public class ClaimProcessManagerImpl implements ClaimProcessManager {
 
     @Override
     public Claim getOne(String claimId) {
-        Optional<Claim> claim = claims.stream()
-                .filter(c -> c.getId().equals(claimId))
-                .findFirst();
-        return claim.orElse(null);
+        return claims.stream().filter(claim -> claim.getId().equals(claimId)).findFirst().orElse(null);
     }
 
     @Override

@@ -18,9 +18,7 @@ public class Claim {
     private String receiverBankingInfo; // Receiver's banking information (Bank – Name – Number)
 
     // Constructor
-    public Claim(String id, Date claimDate, Customer insuredPerson, String cardNumber,
-                 Date examDate, List<String> documents, double claimAmount, String status,
-                 String receiverBankingInfo) {
+    public Claim(String id, Date claimDate, String insuredPersonId, String cardNumber, Date examDate, List<String> documents, double claimAmount, String status, String receiverBankingInfo){
         this.id = id;
         this.claimDate = claimDate;
         this.insuredPerson = insuredPerson;

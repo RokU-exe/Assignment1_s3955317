@@ -32,6 +32,9 @@ public class InsuranceCard {
     public InsuranceCard(String part, String part1, String part2, Date expirationDate) {
     }
 
+    public InsuranceCard(String part, String part1, Date expirationDate) {
+    }
+
     // Getters and Setters
     public String getCardNumber() {
         return cardNumber;
