@@ -35,20 +35,20 @@ public abstract class Customer {
         this.id = id;
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
 
-    public InsuranceCard getInsuranceCard() {
-        return insuranceCard;
-    }
-
     public void setInsuranceCard(InsuranceCard insuranceCard) {
         this.insuranceCard = insuranceCard;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public InsuranceCard getInsuranceCard() {
+        return insuranceCard;
     }
 
     /**

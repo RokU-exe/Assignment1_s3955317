@@ -5,17 +5,15 @@
 package org.system.insurance.ui;
 
 import org.system.insurance.manager.ClaimProcessManagerImpl;
-import org.system.insurance.model.Claim;
-import org.system.insurance.model.Customer;
-import org.system.insurance.model.InsuranceCard;
+import org.system.insurance.model.*;
 import org.system.insurance.util.FileUtil;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
-import java.text.SimpleDateFormat;
 
 public class Main {
     private static final String CUSTOMERS_FILE_PATH = "src/main/resources/customers.txt";
@@ -25,13 +23,13 @@ public class Main {
 
     private static final ClaimProcessManagerImpl claimManager = new ClaimProcessManagerImpl();
     private static List<Customer> customers;
-
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private static List<InsuranceCard> insuranceCards;
     private static final Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
         try {
             customers = FileUtil.readCustomers(CUSTOMERS_FILE_PATH);
-            List<InsuranceCard> insuranceCards = FileUtil.readInsuranceCards(INSURANCE_CARDS_FILE_PATH);
+            insuranceCards = FileUtil.readInsuranceCards(INSURANCE_CARDS_FILE_PATH);
             List<Claim> claims = FileUtil.readClaims(CLAIMS_FILE_PATH);
             claims.forEach(claimManager::addClaim);
 
@@ -73,7 +71,7 @@ public class Main {
             e.printStackTrace();
         }
     }
-
+    //The UI when starting the program
     private static void showMenu() {
         System.out.println("\n--- Main Menu ---");
         System.out.println("1 - List All Customers");
@@ -86,23 +84,37 @@ public class Main {
         System.out.print("Enter your choice: ");
     }
 
-
+    //Add listAllCustomers method
     private static void listAllCustomers() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
         if (customers.isEmpty()) {
             System.out.println("No customers found.");
         } else {
-            customers.forEach(System.out::println);
+            for (Customer customer : customers) {
+                System.out.println("PolicyHolder: { ID: " + customer.getId() + ", Name: " + customer.getFullName() + " }");
+
+                InsuranceCard card = customer.getInsuranceCard();
+                if (card != null) {
+                    System.out.println("\tInsurance Card: { Number: " + card.getCardNumber() + ", Expiration Date: " + sdf.format(card.getExpirationDate()) + " }");
+                } else {
+                    System.out.println("\tInsurance Card: Not Available");
+                }
+            }
         }
     }
 
+
+    //Add listAllClaims method
     private static void listAllClaims() {
         List<Claim> allClaims = claimManager.getAll();
         if (allClaims.isEmpty()) {
             System.out.println("No claims found.");
         } else {
-            allClaims.forEach(claim -> System.out.println(STR."Claim ID: \{claim.getId()}, Claim Date: \{dateFormat.format(claim.getClaimDate())}, Amount: \{claim.getClaimAmount()}, Status: \{claim.getStatus()}"));
+            allClaims.forEach(claim -> System.out.println(STR."Claim ID: \{claim.getId()}, Claim Date: \{sdf.format(claim.getClaimDate())}, Amount: \{claim.getClaimAmount()}, Status: \{claim.getStatus()}"));
         }
     }
+    //Add showClaimDetails method
     private static void showClaimDetails() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter Claim ID: ");
@@ -114,7 +126,7 @@ public class Main {
             System.out.println("Claim not found.");
         }
     }
-
+    //Add addNewClaim method
     private static void addNewClaim() {
         try {
             System.out.println("Enter Claim ID:");
@@ -155,6 +167,7 @@ public class Main {
             System.out.println("Error parsing the claim amount. Please enter a valid number.");
         }
     }
+    //Add updateClaim method
     private static void updateClaim() {
         try {
             System.out.print("Enter the ID of the claim to update: ");
@@ -197,6 +210,7 @@ public class Main {
             System.out.println("Error parsing the claim amount. Please enter a valid number.");
         }
     }
+    //Add deleteClaim method
     private static void deleteClaim() {
         System.out.print("Enter the ID of the claim to delete: ");
         String claimId = scanner.nextLine();
@@ -209,11 +223,10 @@ public class Main {
         }
     }
 
-
+    //Save and update data
     private static void saveDataAndExit() {
         try {
             System.out.println("Saving data...");
-            // Assume you've implemented similar methods for customers and insurance cards
             FileUtil.writeClaims(claimManager.getAll(), CLAIMS_FILE_PATH);
             System.out.println("Data saved successfully.");
             System.exit(0);

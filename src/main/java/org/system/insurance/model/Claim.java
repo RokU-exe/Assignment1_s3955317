@@ -18,7 +18,7 @@ public class Claim {
     private String status;
     private String receiverBankingInfo;
 
-    // Constructor
+    //Constructor
     public Claim(String id, Date claimDate, String insuredPersonId, String cardNumber, Date examDate, List<String> documents, double claimAmount, String status, String receiverBankingInfo){
         this.id = id;
         this.claimDate = claimDate;
@@ -31,85 +31,41 @@ public class Claim {
         this.receiverBankingInfo = receiverBankingInfo;
     }
 
-    // Getters and Setters
+    //Getters
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public Date getClaimDate() {
         return claimDate;
     }
 
-    public void setClaimDate(Date claimDate) {
-        this.claimDate = claimDate;
-    }
-
-    public Customer getInsuredPerson() {
-        return insuredPerson;
-    }
-
-    public void setInsuredPerson(Customer insuredPerson) {
-        this.insuredPerson = insuredPerson;
-    }
-
     public String getCardNumber() {
         return cardNumber;
-    }
-
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
     }
 
     public Date getExamDate() {
         return examDate;
     }
 
-    public void setExamDate(Date examDate) {
-        this.examDate = examDate;
-    }
-
     public List<String> getDocuments() {
         return documents;
-    }
-
-    public void setDocuments(List<String> documents) {
-        this.documents = documents;
     }
 
     public double getClaimAmount() {
         return claimAmount;
     }
 
-    public void setClaimAmount(double claimAmount) {
-        this.claimAmount = claimAmount;
-    }
-
     public String getStatus() {
         return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getReceiverBankingInfo() {
         return receiverBankingInfo;
     }
 
-    public void setReceiverBankingInfo(String receiverBankingInfo) {
-        this.receiverBankingInfo = receiverBankingInfo;
-    }
-
     public String getInsuredPersonId() {
         return insuredPersonId;
-    }
-
-    public void setInsuredPersonId(String insuredPersonId) {
-        this.insuredPersonId = insuredPersonId;
     }
 
     @Override

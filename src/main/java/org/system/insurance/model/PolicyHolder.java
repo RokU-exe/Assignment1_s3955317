@@ -5,13 +5,27 @@
 package org.system.insurance.model;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.function.Function;
+
 
 /**
  * Represents a policyholder in the insurance system. Inherits from Customer and adds
  * the capability to have dependents.
  */
 public class PolicyHolder extends Customer {
-    private List<Dependent> dependents; // List to store the policyholder's dependents
+    private List<Dependent> dependents;
+
+    @Override
+    public String toString() {
+        return "PolicyHolder{" +
+                "dependents=" + dependents +
+                ", id='" + id + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", insuranceCard=" + insuranceCard +
+                '}';
+    }
 
     /**
      * Constructor for creating an instance of PolicyHolder.
@@ -20,46 +34,18 @@ public class PolicyHolder extends Customer {
      * @param fullName      The full name of the policyholder.
      * @param insuranceCard The insurance card associated with the policyholder.
      */
+    // Constructor
     public PolicyHolder(String id, String fullName, InsuranceCard insuranceCard) {
         super(id, fullName, insuranceCard);
         this.dependents = new ArrayList<>();
     }
-
-    /**
-     * Adds a dependent to the policyholder's list of dependents.
-     *
-     * @param dependent The dependent to add.
-     */
     public void addDependent(Dependent dependent) {
-        dependents.add(dependent);
+        if (this.dependents == null) {
+            this.dependents = new ArrayList<>();
+        }
+        this.dependents.add(dependent);
     }
-
-    /**
-     * Removes a dependent from the policyholder's list of dependents.
-     *
-     * @param dependent The dependent to remove.
-     */
-    public void removeDependent(Dependent dependent) {
-        dependents.remove(dependent);
-    }
-
-    /**
-     * Gets the list of dependents for the policyholder.
-     *
-     * @return The list of dependents.
-     */
     public List<Dependent> getDependents() {
-        return dependents;
-    }
-
-    @Override
-    public String toString() {
-        return "PolicyHolder{" +
-                "id='" + getId() + '\'' +
-                ", fullName='" + getFullName() + '\'' +
-                ", insuranceCard=" + getInsuranceCard() +
-                ", dependents=" + dependents.stream().map(Dependent::getFullName).toList() +
-                '}';
+        return this.dependents;
     }
 }
-
