@@ -4,61 +4,51 @@
 
 package org.system.insurance.util;
 
+import org.system.insurance.model.*;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import org.system.insurance.model.Claim;
-import org.system.insurance.model.Customer;
-import org.system.insurance.model.Dependent;
-import org.system.insurance.model.InsuranceCard;
-import org.system.insurance.model.PolicyHolder;
+import java.util.*;
 
 public class FileUtil {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    // Inside FileUtil.java
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
 
     public static List<Customer> readCustomers(String filePath) throws IOException {
         List<Customer> customers = new ArrayList<>();
         List<String> lines = readLines(filePath);
         for (String line : lines) {
             String[] parts = line.split(",");
-            String type = parts[0];
-            if ("P".equals(type)) {
-                PolicyHolder policyHolder = new PolicyHolder(parts[1], parts[2], null); // Example; adjust as necessary
+            if (parts.length < 4) continue; // Skip if line doesn't have enough parts
+            if ("P".equals(parts[0])) {
+                PolicyHolder policyHolder = new PolicyHolder(parts[1], parts[2], parts[3]); // parts[3] is the insurance card ID
                 customers.add(policyHolder);
-            } else if ("D".equals(type)) {
-                Dependent dependent = new Dependent(parts[1], parts[2], null); // Example; adjust as necessary
+            } else if ("D".equals(parts[0])) {
+                Dependent dependent = new Dependent(parts[1], parts[2], parts[3]); // Likewise for dependents
                 customers.add(dependent);
             }
         }
         return customers;
     }
+
     public static List<InsuranceCard> readInsuranceCards(String filePath) throws IOException, ParseException {
         List<InsuranceCard> insuranceCards = new ArrayList<>();
         List<String> lines = readLines(filePath);
         for (String line : lines) {
             String[] parts = line.split(",");
+            if (parts.length < 4) continue; // Ensure there are enough parts to create an InsuranceCard
             Date expirationDate = dateFormat.parse(parts[3]);
-            InsuranceCard card = new InsuranceCard(parts[0], parts[1], expirationDate);
+            InsuranceCard card = new InsuranceCard(parts[0], parts[1], parts[2], expirationDate); // Corrected to include all parameters
             insuranceCards.add(card);
         }
         return insuranceCards;
     }
+
     public static List<Claim> readClaims(String filePath) throws IOException, ParseException {
         List<Claim> claims = new ArrayList<>();
         List<String> lines = readLines(filePath);
         for (String line : lines) {
             String[] parts = line.split(",");
-            if (parts.length < 9) {
-                System.out.println(STR."Skipping malformed line: \{line}");
-                continue;
-            }
+            if (parts.length < 9) continue; // Check for the correct number of parts for a claim
             Date claimDate = dateFormat.parse(parts[1]);
             Date examDate = dateFormat.parse(parts[4]);
             List<String> documents = Arrays.asList(parts[5].split(";"));
@@ -90,6 +80,7 @@ public class FileUtil {
             }
         }
     }
+
     public static void writeClaims(List<Claim> claims, String filePath) throws IOException {
         List<String> lines = new ArrayList<>();
         for (Claim claim : claims) {
@@ -108,4 +99,3 @@ public class FileUtil {
         writeLines(lines, filePath);
     }
 }
-

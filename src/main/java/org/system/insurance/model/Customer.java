@@ -11,6 +11,7 @@ package org.system.insurance.model;
 public abstract class Customer {
     protected String id;
     protected String fullName;
+    protected String insuranceCardId;
     protected InsuranceCard insuranceCard;
 
     /**
@@ -18,19 +19,18 @@ public abstract class Customer {
      *
      * @param id           The customer's ID.
      * @param fullName     The customer's full name.
-     * @param insuranceCard The insurance card associated with the customer.
+     * @param insuranceCardId The insurance card associated with the customer.
      */
-    public Customer(String id, String fullName, InsuranceCard insuranceCard) {
+    public Customer(String id, String fullName, String insuranceCardId) {
         this.id = id;
         this.fullName = fullName;
-        this.insuranceCard = insuranceCard;
+        this.insuranceCardId = insuranceCardId;
     }
 
     // Getters and Setters
     public String getId() {
         return id;
     }
-
     public void setId(String id) {
         this.id = id;
     }
@@ -49,6 +49,13 @@ public abstract class Customer {
 
     public InsuranceCard getInsuranceCard() {
         return insuranceCard;
+    }
+    public String getInsuranceCardId() {
+        return insuranceCardId;
+    }
+
+    public void setInsuranceCardId(String insuranceCardId) {
+        this.insuranceCardId = insuranceCardId;
     }
 
     /**

@@ -11,9 +11,7 @@ import org.system.insurance.util.FileUtil;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     private static final String CUSTOMERS_FILE_PATH = "src/main/resources/customers.txt";
@@ -33,9 +31,10 @@ public class Main {
             List<Claim> claims = FileUtil.readClaims(CLAIMS_FILE_PATH);
             claims.forEach(claimManager::addClaim);
 
+            associateInsuranceCardsWithCustomers();
+
             System.out.println("Insurance Claims Management System Initialized.");
 
-            Scanner scanner = new Scanner(System.in);
             while (true) {
                 showMenu();
                 int choice = scanner.nextInt();
@@ -61,14 +60,27 @@ public class Main {
                         break;
                     case 0:
                         saveDataAndExit();
-                        break;
+                        return; // exit main
                     default:
                         System.out.println("Invalid option. Please try again.");
                 }
             }
         } catch (Exception e) {
-            System.err.println(STR."Error initializing system: \{e.getMessage()}");
+            System.err.println("Error initializing system: " + e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    private static void associateInsuranceCardsWithCustomers() {
+        Map<String, InsuranceCard> cardMap = new HashMap<>();
+        for (InsuranceCard card : insuranceCards) {
+            cardMap.put(card.getCardNumber(), card);
+        }
+        for (Customer customer : customers) {
+            InsuranceCard card = cardMap.get(customer.getInsuranceCardId());
+            if (card != null) {
+                customer.setInsuranceCard(card);
+            }
         }
     }
     //The UI when starting the program
@@ -103,7 +115,6 @@ public class Main {
             }
         }
     }
-
 
     //Add listAllClaims method
     private static void listAllClaims() {
