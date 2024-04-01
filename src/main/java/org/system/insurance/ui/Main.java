@@ -104,7 +104,6 @@ public class Main {
         }
     }
 
-
     //Add listAllClaims method
     private static void listAllClaims() {
         List<Claim> allClaims = claimManager.getAll();
